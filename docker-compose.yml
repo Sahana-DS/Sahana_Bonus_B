@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres21
+    ports:
+      - "5191:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin234
+      POSTGRES_DB: bonus_proposals
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    build: ./Backend
+    container_name: backend22
+    ports:
+      - "3876:3876"
+    environment:
+      DATABASE_URL: "postgres://postgres:admin234@postgres:5432/bonus_proposals"
+    depends_on:
+      - postgres
+
+  frontend:
+    build: ./Frontend
+    container_name: frontend23
+    ports:
+      - "6511:80"
+    depends_on:
+      - backend
+
+  hr:
+    build: ./HR
+    container_name: hr
+    ports:
+      - "6512:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
+
