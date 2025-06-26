@@ -367,7 +367,7 @@ searchForm.addEventListener('submit', async (event) => {
   // Search for bonus proposal
   try {
     const response = await fetch(
-      `http://localhost:3000/api/bonuses/search?employeeName=${encodeURIComponent(nameQuery)}&employeeID=${idQuery}`
+      `http://13.60.17.13:3876/api/bonuses/search?employeeName=${encodeURIComponent(nameQuery)}&employeeID=${idQuery}`
     );
     
     if (response.status === 404) {
